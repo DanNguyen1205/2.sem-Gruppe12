@@ -1,14 +1,48 @@
 package presentation;
 
-import java.io.IOException;
-import javafx.fxml.FXML;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Scanner;
+import domain.Account;
 
-public class PrimaryController {
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import domain.Login;
+
+public class PrimaryController{
+    Login login = new Login();
+    boolean loggedIn;
 
     @FXML
-    private void switchToSecondary() throws IOException {
-        App.setRoot("secondary");
+    TextField userID, passwordID;
+    @FXML
+    Button signInBtn;
 
-        System.out.println("test,test,test");
+
+    @FXML
+    private void login(){
+        login.makeAccounts();
+
+        String inputUserID = this.userID.getText();
+        String inputPasswordID = this.passwordID.getText();
+
+        for(Account e : login.getAccountsList())
+        {
+            if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
+            {
+                loggedIn = true;
+                break;
+            }
+            else
+            {
+                loggedIn = false;
+            }
+        }
+        System.out.println("logged in is" + loggedIn);
     }
 }
