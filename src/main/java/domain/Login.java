@@ -19,6 +19,7 @@ public class Login {
             File accountFile = new File("C:\\Users\\nguye\\Documents\\GitHub\\2.sem-Gruppe12\\AccountFiles.txt");
             Scanner fileScanner = new Scanner(accountFile);
 
+            //The loop reads the file and makes account classes.
             while(fileScanner.hasNext())
             {
                 String tempString = fileScanner.nextLine();

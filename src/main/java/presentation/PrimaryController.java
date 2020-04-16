@@ -26,11 +26,13 @@ public class PrimaryController{
 
     @FXML
     private void login(){
+        //Use login object to make accounts
         login.makeAccounts();
 
         String inputUserID = this.userID.getText();
         String inputPasswordID = this.passwordID.getText();
 
+        //Loop for checking the input from the GUI to the accounts in the login class. 
         for(Account e : login.getAccountsList())
         {
             if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
@@ -43,6 +45,6 @@ public class PrimaryController{
                 loggedIn = false;
             }
         }
-        System.out.println("logged in is" + loggedIn);
+        System.out.println("logged in is " + loggedIn);
     }
 }
