@@ -1,9 +1,10 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Program {
+public class Program implements Serializable {
     private String uniqueID = UUID.randomUUID().toString();
     private String name;
     private Credit credits;
@@ -12,7 +13,7 @@ public class Program {
 
 
 
-    Program(String uniqueID, String name, Credit credits, String releaseDate, String producer){
+    Program(String name, Credit credits, String releaseDate, String producer){
         this.uniqueID = uniqueID;
         this.name = name;
         this.credits = credits;
@@ -69,7 +70,8 @@ public class Program {
         this.producer = producer;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Program name: " + name + "\n" + "Credits: " + credits;
+    }
 }

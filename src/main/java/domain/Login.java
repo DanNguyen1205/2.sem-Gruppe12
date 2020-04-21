@@ -11,12 +11,10 @@ public class Login {
 
 
     public void makeAccounts() {
-
-
         try {
             accountsList = new ArrayList<>();
             //Scanner to read file, to get every account information (username and pass)
-            File accountFile = new File("C:\\Users\\danny\\Documents\\GitHub\\2.sem-Gruppe12\\AccountFiles.txt");
+            File accountFile = new File("C:\\Users\\nguye\\Documents\\GitHub\\2.sem-Gruppe12\\AccountFiles.txt");
             Scanner fileScanner = new Scanner(accountFile);
 
             //The loop reads the file and makes account classes.

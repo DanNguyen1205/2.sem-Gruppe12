@@ -1,8 +1,9 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Person {
+public class Person implements Serializable {
     private String uniqueID = UUID.randomUUID().toString();
     private String name;
     private String email;
@@ -21,12 +22,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "uniqueID='" + uniqueID + '\'' +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                '}';
+        return "\n" + "Name:" + name + ", Email: " + email + ", Phone number: " + phoneNumber + ", ID: " + uniqueID;
     }
 
     public String getName() {
