@@ -12,7 +12,7 @@
       <TextField fx:id="passwordID" layoutX="29.0" layoutY="102.0" prefHeight="25.0" prefWidth="341.0" />
       <Label layoutX="27.0" layoutY="32.0" text="Username" />
       <Label layoutX="29.0" layoutY="85.0" text="Password" />
-      <Button fx:id="signInBtn" layoutX="28.0" layoutY="143.0" mnemonicParsing="false" onAction="#changeSceneLogInButtonPushed" text="Sign in" />
+      <Button fx:id="signInBtn" layoutX="28.0" layoutY="143.0" mnemonicParsing="false" onAction="#login" text="Sign in" />
       <Text fx:id="loginText" layoutX="29.0" layoutY="202.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please enter username and password" />
    </children>
 </AnchorPane>

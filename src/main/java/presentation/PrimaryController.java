@@ -33,42 +33,40 @@ public class PrimaryController{
 
 
     @FXML
-    private void login(){
+    private void login(ActionEvent loginClicked)throws IOException {
         //Use login object to make accounts
         login.makeAccounts();
 
         String inputUserID = this.userID.getText();
         String inputPasswordID = this.passwordID.getText();
 
-        //Loop for checking the input from the GUI to the accounts in the login class.
+        Parent searchViewParent = FXMLLoader.load(getClass().getResource("SearchView.fxml"));
+        Scene searchViewScene = new Scene(searchViewParent);
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) loginClicked.getSource()).getScene().getWindow();
         for(Account e : login.getAccountsList())
+
+        { if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
         {
-            if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
-            {
-                loggedIn = true;
-                break;
-            }
-            else
-            {
-                loggedIn = false;
-            }
+            loggedIn = true;
+            window.setTitle("Search");
+            window.setScene(searchViewScene);
+            window.show();
+            break;
+        }
+        else
+        {
+            loggedIn = false;
+        }
         }
         System.out.println("logged in is " + loggedIn);
     }
 
-    //When this method is called it will change the scene.
-    @FXML
-    public void changeSceneLogInButtonPushed(ActionEvent loginClicked) throws IOException {
 
-            Parent searchViewParent = FXMLLoader.load(getClass().getResource("SearchView.fxml"));
-            Scene searchViewScene = new Scene(searchViewParent);
-            //This line gets the Stage information
-            Stage window = (Stage) ((Node) loginClicked.getSource()).getScene().getWindow();
-            window.setTitle("Search");
-            window.setScene(searchViewScene);
-            window.show();
-
-    }
 
 
 }
+
+
+
+
