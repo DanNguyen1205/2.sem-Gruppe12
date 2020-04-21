@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.SearchViewController">
+   <children>
+      <HBox layoutX="360.0" layoutY="36.0" prefHeight="88.0" prefWidth="161.0">
+         <children>
+            <TextField prefHeight="28.0" prefWidth="157.0" promptText="Enter a program" />
+         </children>
+      </HBox>
+      <ScrollPane layoutX="520.0" layoutY="-1.0" prefHeight="514.0" prefWidth="200.0">
+         <content>
+            <ListView prefHeight="514.0" prefWidth="208.0" />
+         </content>
+      </ScrollPane>
+      <TextArea layoutX="-1.0" layoutY="171.0" prefHeight="342.0" prefWidth="521.0" />
+      <Accordion />
+      <ToolBar prefHeight="36.0" prefWidth="522.0">
+         <items>
+            <Button fx:id="logOutbtn" mnemonicParsing="false" onAction="#changeSceneLogoutButtonPushed" text="Log out" />
+         </items>
+      </ToolBar>
+   </children>
+</AnchorPane>
