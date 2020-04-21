@@ -44,9 +44,9 @@ public class PrimaryController{
         Scene searchViewScene = new Scene(searchViewParent);
         //This line gets the Stage information
         Stage window = (Stage) ((Node) loginClicked.getSource()).getScene().getWindow();
-        for(Account e : login.getAccountsList())
 
-        { if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
+        for(Account e : login.getAccountsList()) {
+            if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
         {
             loggedIn = true;
             window.setTitle("Search");
@@ -60,6 +60,18 @@ public class PrimaryController{
         }
         }
         System.out.println("logged in is " + loggedIn);
+    }
+    //This method will go to the registration scene when register is pushed
+    public void registerButtonPushed(ActionEvent registerClicked) throws IOException {
+
+        Parent registerViewParent = FXMLLoader.load(getClass().getResource("registrationView.fxml"));
+        Scene registerViewScene = new Scene(registerViewParent);
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) registerClicked.getSource()).getScene().getWindow();
+        window.setTitle("Registrer ny bruger");
+        window.setScene(registerViewScene);
+        window.show();
+
     }
 
 

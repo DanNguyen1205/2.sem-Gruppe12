@@ -21,7 +21,7 @@ public class SearchViewController {
         Scene loginViewScene = new Scene(loginViewParent);
         //This line gets the Stage information
         Stage window = (Stage) ((Node) logoutClicked.getSource()).getScene().getWindow();
-        window.setTitle("Login");
+        window.setTitle("TV2 - Applikation");
         window.setScene(loginViewScene);
         window.show();
 
