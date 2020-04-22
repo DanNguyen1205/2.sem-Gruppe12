@@ -22,7 +22,7 @@ public class Person implements Serializable {
 
     @Override
     public String toString() {
-        return "\n" + "Name:" + name + ", Email: " + email + ", Phone number: " + phoneNumber + ", ID: " + uniqueID;
+        return name;
     }
 
     public String getName() {

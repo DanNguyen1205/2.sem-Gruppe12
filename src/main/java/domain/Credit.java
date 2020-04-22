@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Credit implements Serializable {
+    private String finalString;
     private String uniqueID = UUID.randomUUID().toString();
     private HashMap<Person, String> creditMap = new HashMap<Person, String>();
 
@@ -30,20 +31,12 @@ public class Credit implements Serializable {
 
     @Override
     public String toString() {
-        return printMap(this.creditMap);
-    }
-
-    public static String printMap(Map mp) {
-        Iterator it = mp.entrySet().iterator();
-        String finalString = "";
-
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            String tempString;
-            tempString = String.format("%s = %s", pair.getKey(), pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
-            finalString = finalString + tempString;
-        }
+        finalString = "";
+        creditMap.forEach((key, value) -> {
+            finalString += value + ": " + key + "\n";
+        });
         return finalString;
     }
+
+
 }
