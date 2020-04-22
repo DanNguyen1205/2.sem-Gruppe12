@@ -15,7 +15,7 @@ public class SearchSystem {
     private String fileName;
     private ArrayList<Program> programList = null;
 
-    SearchSystem() {
+    public SearchSystem() {
         fileName = "credits.dat";
     }
 
@@ -69,16 +69,17 @@ public class SearchSystem {
         }*/
     }
 
-    public void searchProgram(String keyWord)
+    public ArrayList<Program> searchProgram(String keyWord)
     {
+        ArrayList<Program> tempArray = new ArrayList<>();
         for(Program e : programList)
         {
             if(e.getName().contains(keyWord))
             {
-                System.out.println(e);
+                tempArray.add(e);
             }
         }
-
+        return tempArray;
     }
 
 
