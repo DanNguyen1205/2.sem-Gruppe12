@@ -50,6 +50,7 @@ public class SearchViewController implements Initializable {
     @FXML
     public void Search()
     {
+        observableList.clear();
         String keyWord = searchField.getText();
         ArrayList<Program> tempArray = searchSystem.searchProgram(keyWord);
 
