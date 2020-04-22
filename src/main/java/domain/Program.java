@@ -72,6 +72,13 @@ public class Program implements Serializable {
 
     @Override
     public String toString() {
-        return "Program name: " + name + "\n" + "Credits: " + credits;
+        return name;
     }
+
+    public String showCredit()
+    {
+        String finalString = "";
+        return finalString = "Kreditter til " + name + ":" +" \n" + credits;
+    }
+
 }

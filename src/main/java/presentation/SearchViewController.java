@@ -12,7 +12,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,6 +32,8 @@ public class SearchViewController implements Initializable {
 
     @FXML
     TextField searchField;
+    @FXML
+    TextArea creditArea;
 
     //This method will switch the scene back to the primary scene.
     public void changeSceneLogoutButtonPushed(ActionEvent logoutClicked) throws IOException {
@@ -54,7 +58,12 @@ public class SearchViewController implements Initializable {
             observableList.add(e);
         }
 
+    }
 
+    @FXML
+    public void programClickedOn (MouseEvent event)
+    {
+        creditArea.setText(listView.getSelectionModel().getSelectedItem().showCredit());
     }
 
     @Override
