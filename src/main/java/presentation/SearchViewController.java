@@ -1,19 +1,36 @@
 package presentation;
 
+import domain.Program;
+import domain.SearchSystem;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import java.awt.*;
+
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 
+public class SearchViewController implements Initializable {
+    SearchSystem searchSystem;
 
+    ObservableList<Program> observableList;
+    @FXML
+    private ListView<Program> listView;
 
-public class SearchViewController {
+    @FXML
+    TextField searchField;
+
     //This method will switch the scene back to the primary scene.
     public void changeSceneLogoutButtonPushed(ActionEvent logoutClicked) throws IOException {
 
@@ -24,9 +41,31 @@ public class SearchViewController {
         window.setTitle("TV2 - Applikation");
         window.setScene(loginViewScene);
         window.show();
+    }
+
+    @FXML
+    public void Search()
+    {
+        String keyWord = searchField.getText();
+        ArrayList<Program> tempArray = searchSystem.searchProgram(keyWord);
+
+        for(Program e : tempArray)
+        {
+            observableList.add(e);
+        }
 
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Initiate the SearchSystem object so we can create and read the credits.
+        searchSystem =  new SearchSystem();
+        searchSystem.createCredits();
+        searchSystem.readCredits();
+
+        observableList = FXCollections.observableArrayList();
+        listView.setItems(observableList);
+    }
 }
 
