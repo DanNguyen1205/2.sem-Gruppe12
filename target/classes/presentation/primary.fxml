@@ -36,5 +36,10 @@
             <Font name="System Bold Italic" size="16.0" />
          </font>
       </Label>
+      <Label fx:id="notifierLbl" layoutX="109.0" layoutY="204.0" prefHeight="18.0" prefWidth="179.0" textFill="#f0efef">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

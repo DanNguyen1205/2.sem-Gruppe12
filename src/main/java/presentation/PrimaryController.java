@@ -17,6 +17,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import domain.Login;
 import javafx.stage.Stage;
@@ -30,6 +31,8 @@ public class PrimaryController{
     TextField userID, passwordID;
     @FXML
     Button signInBtn;
+    @FXML
+    Label notifierLbl;
 
 
     @FXML
@@ -57,6 +60,7 @@ public class PrimaryController{
         else
         {
             loggedIn = false;
+            notifierLbl.setText("Wrong password! Try again.");
         }
         }
         System.out.println("logged in is " + loggedIn);

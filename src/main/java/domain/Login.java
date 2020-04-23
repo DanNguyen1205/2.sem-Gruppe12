@@ -35,4 +35,8 @@ public class Login {
     public ArrayList<Account> getAccountsList() {
         return accountsList;
     }
+
+    public void wrongPass(){
+        System.out.println("Wrong password. Try again.");
+    }
 }
