@@ -27,7 +27,7 @@ public class StartViewController {
     public void switchToPrimary(ActionEvent LoginClicked) throws IOException {
 
         //This method switches scene to primary
-        Parent primaryViewParent = FXMLLoader.load(getClass().getResource("primary.fxml"));
+        Parent primaryViewParent = FXMLLoader.load(getClass().getResource("adminLoginView.fxml"));
         Scene primaryViewScene = new Scene(primaryViewParent);
         //This line gets the Stage information
         Stage window = (Stage) ((Node) LoginClicked.getSource()).getScene().getWindow();

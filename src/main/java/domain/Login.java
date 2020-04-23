@@ -36,7 +36,5 @@ public class Login {
         return accountsList;
     }
 
-    public void wrongPass(){
-        System.out.println("Wrong password. Try again.");
-    }
+
 }
