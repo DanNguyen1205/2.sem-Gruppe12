@@ -40,7 +40,7 @@ public class PrimaryController{
         String inputUserID = this.userID.getText();
         String inputPasswordID = this.passwordID.getText();
 
-        Parent searchViewParent = FXMLLoader.load(getClass().getResource("SearchView.fxml"));
+        Parent searchViewParent = FXMLLoader.load(getClass().getResource("adminView.fxml"));
         Scene searchViewScene = new Scene(searchViewParent);
         //This line gets the Stage information
         Stage window = (Stage) ((Node) loginClicked.getSource()).getScene().getWindow();
@@ -49,7 +49,7 @@ public class PrimaryController{
             if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
         {
             loggedIn = true;
-            window.setTitle("Search");
+            window.setTitle("Logget ind som admin");
             window.setScene(searchViewScene);
             window.show();
             break;
@@ -61,15 +61,20 @@ public class PrimaryController{
         }
         System.out.println("logged in is " + loggedIn);
     }
-    //This method will go to the registration scene when register is pushed
-    public void registerButtonPushed(ActionEvent registerClicked) throws IOException {
 
-        Parent registerViewParent = FXMLLoader.load(getClass().getResource("registrationView.fxml"));
-        Scene registerViewScene = new Scene(registerViewParent);
+
+
+
+    //This method will go back to startView
+    public void AdminSwitchTostartView(ActionEvent BackClicked) throws IOException {
+
+        //This method switches scene to primary
+        Parent startViewParent = FXMLLoader.load(getClass().getResource("startView.fxml"));
+        Scene startViewScene = new Scene(startViewParent);
         //This line gets the Stage information
-        Stage window = (Stage) ((Node) registerClicked.getSource()).getScene().getWindow();
-        window.setTitle("Registrer ny bruger");
-        window.setScene(registerViewScene);
+        Stage window = (Stage) ((Node) BackClicked.getSource()).getScene().getWindow();
+        window.setTitle("Login");
+        window.setScene(startViewScene);
         window.show();
 
     }

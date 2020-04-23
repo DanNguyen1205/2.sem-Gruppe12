@@ -21,11 +21,11 @@
       <Accordion />
       <ToolBar prefHeight="36.0" prefWidth="522.0">
          <items>
-            <Button fx:id="logOutbtn" mnemonicParsing="false" onAction="#changeSceneLogoutButtonPushed" text="Log out" />
-            <Label fx:id="LoggedInLbl" text="Logged in..." />
+            <Button fx:id="logOutbtn" mnemonicParsing="false" onAction="#exitButtonPushed" prefHeight="26.0" prefWidth="73.0" text="Afslut" />
+            <Label fx:id="LoggedInLbl" />
          </items>
       </ToolBar>
       <TextField fx:id="searchField" layoutX="7.0" layoutY="55.0" prefHeight="25.0" prefWidth="386.0" />
-      <Button fx:id="searchBtn" layoutX="403.0" layoutY="55.0" mnemonicParsing="false" onAction="#Search" text="Search" />
+      <Button fx:id="searchBtn" layoutX="403.0" layoutY="55.0" mnemonicParsing="false" onAction="#Search" text="Søg" />
    </children>
 </AnchorPane>

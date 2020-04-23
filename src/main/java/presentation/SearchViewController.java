@@ -36,14 +36,14 @@ public class SearchViewController implements Initializable {
     TextArea creditArea;
 
     //This method will switch the scene back to the primary scene.
-    public void changeSceneLogoutButtonPushed(ActionEvent logoutClicked) throws IOException {
+    public void exitButtonPushed(ActionEvent Clicked) throws IOException {
 
-        Parent loginViewParent = FXMLLoader.load(getClass().getResource("primary.fxml"));
-        Scene loginViewScene = new Scene(loginViewParent);
+        Parent startViewParent = FXMLLoader.load(getClass().getResource("startView.fxml"));
+        Scene startViewScene = new Scene(startViewParent);
         //This line gets the Stage information
-        Stage window = (Stage) ((Node) logoutClicked.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) Clicked.getSource()).getScene().getWindow();
         window.setTitle("TV2 - Applikation");
-        window.setScene(loginViewScene);
+        window.setScene(startViewScene);
         window.show();
     }
 
