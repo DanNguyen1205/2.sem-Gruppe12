@@ -9,23 +9,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.PrimaryController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="240.0" prefWidth="494.0" style="-fx-background-color: darkred;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.PrimaryController">
    <children>
       <TextField fx:id="userID" layoutX="19.0" layoutY="107.0" prefHeight="26.0" prefWidth="179.0" />
-      <Label layoutX="19.0" layoutY="84.0" text="Brugernavn" />
-      <Label layoutX="17.0" layoutY="134.0" text="Adgangskode" />
-      <Button fx:id="signInBtn" layoutX="19.0" layoutY="199.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: LIMEGREEN;" text="Log in">
+      <Label layoutX="19.0" layoutY="84.0" text="Brugernavn" textFill="WHITE">
          <font>
-            <Font name="System Italic" size="12.0" />
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Label layoutX="17.0" layoutY="134.0" text="Adgangskode" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></Label>
+      <Button fx:id="signInBtn" layoutX="19.0" layoutY="199.0" mnemonicParsing="false" onAction="#login" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: LIMEGREEN;" text="Log in" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
          </font></Button>
       <PasswordField fx:id="passwordID" layoutX="19.0" layoutY="152.0" prefHeight="26.0" prefWidth="179.0" />
       <ImageView fitHeight="115.0" fitWidth="221.0" layoutX="241.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../Danish_TV_2_logo.png" />
+            <Image url="@../tv2-logo-hvid.png" />
          </image>
       </ImageView>
-      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#AdminSwitchTostartView" text="Gå tilbage" />
-      <Label alignment="CENTER" layoutX="138.0" layoutY="40.0" prefHeight="26.0" prefWidth="227.0" text="Log ind som administrator">
+      <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#AdminSwitchTostartView" text="Gå tilbage" textFill="#060000" />
+      <Label alignment="CENTER" layoutX="138.0" layoutY="40.0" prefHeight="26.0" prefWidth="227.0" text="Log ind som administrator" textFill="WHITE">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
