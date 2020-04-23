@@ -7,25 +7,25 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.SearchViewController">
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.SearchViewController">
    <children>
-      <ScrollPane layoutX="520.0" layoutY="-1.0" prefHeight="514.0" prefWidth="200.0">
+      <ScrollPane layoutX="520.0" layoutY="-1.0">
          <content>
-            <ListView fx:id="listView" onMouseClicked="#programClickedOn" prefHeight="526.0" prefWidth="190.0" />
+            <ListView fx:id="listView" onMouseClicked="#programClickedOn" />
          </content>
       </ScrollPane>
-      <TextArea fx:id="creditArea" layoutX="-1.0" layoutY="171.0" prefHeight="342.0" prefWidth="521.0" />
+      <TextArea fx:id="creditArea" layoutX="13.0" layoutY="184.0" prefHeight="203.0" prefWidth="490.0" />
       <Accordion />
-      <ToolBar prefHeight="36.0" prefWidth="522.0">
-         <items>
-            <Button fx:id="logOutbtn" mnemonicParsing="false" onAction="#exitButtonPushed" prefHeight="26.0" prefWidth="73.0" text="Afslut" />
-            <Label fx:id="LoggedInLbl" />
-         </items>
-      </ToolBar>
-      <TextField fx:id="searchField" layoutX="7.0" layoutY="55.0" prefHeight="25.0" prefWidth="386.0" />
-      <Button fx:id="searchBtn" layoutX="403.0" layoutY="55.0" mnemonicParsing="false" onAction="#Search" text="Søg" />
+      <TextField fx:id="searchField" layoutX="14.0" layoutY="55.0" prefHeight="25.0" prefWidth="386.0" />
+      <Button fx:id="searchBtn" layoutX="407.0" layoutY="54.0" mnemonicParsing="false" onAction="#Search" prefHeight="26.0" prefWidth="46.0" text="Søg" />
+      <Button fx:id="logOutbtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#exitButtonPushed" prefHeight="26.0" prefWidth="73.0" text="Afslut" />
+      <Label layoutX="113.0" layoutY="21.0" text="Indtast navnet på produktionen">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

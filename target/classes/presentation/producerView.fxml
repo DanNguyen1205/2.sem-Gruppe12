@@ -16,8 +16,10 @@
          </content></ScrollPane>
       <TextArea layoutX="9.0" layoutY="181.0" prefHeight="215.0" prefWidth="511.0" />
       <Accordion layoutX="10.0" layoutY="10.0" />
-      <TextField layoutX="17.0" layoutY="65.0" prefHeight="25.0" prefWidth="386.0" />
-      <Button layoutX="413.0" layoutY="65.0" mnemonicParsing="false" text="Søg" />
-      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#exitFromProducerPushed" prefHeight="26.0" prefWidth="68.0" text="Afslut" />
+      <TextField layoutX="14.0" layoutY="52.0" prefHeight="25.0" prefWidth="386.0" />
+      <Button layoutX="410.0" layoutY="51.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="48.0" text="Søg" />
+      <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#exitFromProducerPushed" prefHeight="26.0" prefWidth="68.0" text="Log af" />
+      <Button layoutX="14.0" layoutY="148.0" mnemonicParsing="false" onAction="#newProductionPushed" prefHeight="26.0" prefWidth="130.0" text="Indsæt ny produktion" />
+      <Button layoutX="157.0" layoutY="148.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="130.0" text="Rediger produktion" />
    </children>
 </AnchorPane>

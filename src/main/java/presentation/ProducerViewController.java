@@ -21,4 +21,15 @@ public class ProducerViewController {
         window.setScene(startViewScene);
         window.show();
     }
+
+    public void newProductionPushed(ActionEvent Clicked) throws IOException {
+
+        Parent newProductionViewParent = FXMLLoader.load(getClass().getResource("producerNewProductionView.fxml"));
+        Scene newProductionViewScene = new Scene(newProductionViewParent);
+        //This line gets the Stage information
+        Stage window = (Stage) ((Node) Clicked.getSource()).getScene().getWindow();
+        window.setTitle("Indsæt ny produktion");
+        window.setScene(newProductionViewScene);
+        window.show();
+    }
 }
