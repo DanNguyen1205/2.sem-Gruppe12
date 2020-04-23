@@ -43,7 +43,7 @@ public class StartViewController {
         Scene producerLoginViewScene = new Scene(producerLoginViewParent);
         //This line gets the Stage information
         Stage window = (Stage) ((Node) LoginClicked.getSource()).getScene().getWindow();
-        window.setTitle("Log in som producer");
+        window.setTitle("Log ind som producer");
         window.setScene(producerLoginViewScene);
         window.show();
 

@@ -11,19 +11,19 @@
 
 <AnchorPane prefHeight="249.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="presentation.ProducerLoginController">
    <children>
-      <Button layoutX="37.0" layoutY="192.0" mnemonicParsing="false" onAction="#goTostartView" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: LIMEGREEN;" text="Log ind">
+      <Button fx:id="logIndProducerBtn" layoutX="22.0" layoutY="208.0" mnemonicParsing="false" onAction="#ProducerLogin" prefHeight="26.0" prefWidth="66.0" style="-fx-background-color: LIMEGREEN;" text="Log ind">
          <font>
             <Font name="System Italic" size="12.0" />
          </font>
       </Button>
-      <PasswordField layoutX="36.0" layoutY="157.0" prefHeight="26.0" prefWidth="162.0" />
-      <TextField layoutX="37.0" layoutY="109.0" prefHeight="26.0" prefWidth="161.0" />
-      <Label layoutX="37.0" layoutY="89.0" text="Brugernavn">
+      <PasswordField fx:id="ProducerKodeID" layoutX="22.0" layoutY="157.0" prefHeight="26.0" prefWidth="162.0" />
+      <TextField fx:id="ProducerID" layoutX="22.0" layoutY="111.0" prefHeight="26.0" prefWidth="161.0" />
+      <Label layoutX="22.0" layoutY="88.0" text="Brugernavn">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
-      <Label layoutX="37.0" layoutY="138.0" text="Adgangskode">
+      <Label layoutX="22.0" layoutY="138.0" text="Adgangskode">
          <font>
             <Font size="13.0" />
          </font>
@@ -34,7 +34,7 @@
          </image>
       </ImageView>
       <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#goTostartView" text="Gå tilbage" />
-      <Label layoutX="148.0" layoutY="50.0" prefHeight="26.0" prefWidth="227.0" text="Log ind som producer">
+      <Label alignment="CENTER" layoutX="143.0" layoutY="40.0" prefHeight="26.0" prefWidth="227.0" text="Log ind som producer">
          <font>
             <Font name="System Bold Italic" size="16.0" />
          </font>
