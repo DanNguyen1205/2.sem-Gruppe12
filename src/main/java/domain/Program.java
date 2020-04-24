@@ -13,10 +13,18 @@ public class Program implements Serializable{
 
 
 
-    Program(String name, Credit credits, String releaseDate, String producer){
+    public Program(String name, Credit credits, String releaseDate, String producer){
         this.uniqueID = uniqueID;
         this.name = name;
         this.credits = credits;
+        this.releaseDate = releaseDate;
+        this.producer = producer;
+    }
+
+    // constructor for when u make a progrma without its credits.
+    public Program(String name, String releaseDate, String producer){
+        this.uniqueID = uniqueID;
+        this.name = name;
         this.releaseDate = releaseDate;
         this.producer = producer;
     }
@@ -37,7 +45,7 @@ public class Program implements Serializable{
         return this.name;
     }
 
-    public void setName(){
+    public void setName(String name){
         this.name = name;
     }
 
@@ -56,7 +64,7 @@ public class Program implements Serializable{
         return this.releaseDate;
     }
 
-    public void setReleaseDate(){
+    public void setReleaseDate(String releaseDate){
         this.releaseDate = releaseDate;
     }
 
@@ -66,7 +74,7 @@ public class Program implements Serializable{
         return this.producer;
     }
 
-    public void setProducer(){
+    public void setProducer(String producer){
         this.producer = producer;
     }
 

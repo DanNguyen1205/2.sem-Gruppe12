@@ -7,9 +7,13 @@ public class Person implements Serializable{
     private String uniqueID = UUID.randomUUID().toString();
     private String name;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
 
-    public Person(String name, String email, int phoneNumber){
+
+
+    private String role;
+
+    public Person(String name, String email, String phoneNumber){
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -20,11 +24,6 @@ public class Person implements Serializable{
         return this.uniqueID;
     }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
     public String getName() {
         return name;
     }
@@ -33,7 +32,21 @@ public class Person implements Serializable{
         return email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "Role: " + getRole() + " Name: " + getName();
+    }
 }
+

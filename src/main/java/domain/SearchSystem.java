@@ -22,15 +22,15 @@ public class SearchSystem{
     public void createCredits() {
         //Create credit and program objects
         HashMap<Person, String> creditHashMap1 = new HashMap<>();
-        creditHashMap1.put(new Person("John Doe", "Johndoe@gmail.com", 11223344), "Director");
-        creditHashMap1.put(new Person("Pepper Doe", "Pepperdoe@gmail.com", 22334455), "Assistant director");
+        creditHashMap1.put(new Person("John Doe", "Johndoe@gmail.com", "11223344"), "Director");
+        creditHashMap1.put(new Person("Pepper Doe", "Pepperdoe@gmail.com", "22334455"), "Assistant director");
 
         Credit credit1 = new Credit(creditHashMap1);
         Program program1 = new Program("Rooftop Prince", credit1, "12/05/1999", "Jill Valentine");
 
         HashMap<Person, String> creditHashMap2 = new HashMap<>();
-        creditHashMap2.put(new Person("Nanna Doe", "Nannadoe@gmail.com", 33445566), "Executive producer");
-        creditHashMap2.put(new Person("Bob Doe", "Bobdoe@gmail.com", 44556677), "Music");
+        creditHashMap2.put(new Person("Nanna Doe", "Nannadoe@gmail.com", "33445566"), "Executive producer");
+        creditHashMap2.put(new Person("Bob Doe", "Bobdoe@gmail.com", "44556677"), "Music");
 
         Credit credit2 = new Credit(creditHashMap2);
         Program program2 = new Program("The Intouchables", credit2, "12/06/1994", "Lirik");
