@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
-public class Program implements Serializable {
+public class Program implements Serializable{
     private String uniqueID = UUID.randomUUID().toString();
     private String name;
     private Credit credits;

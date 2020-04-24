@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ProducerLoginController {
+public class ProducerLoginController{
     Login login = new Login();
     boolean loggedIn;
 
