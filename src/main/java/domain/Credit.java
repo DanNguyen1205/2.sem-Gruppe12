@@ -16,6 +16,9 @@ public class Credit implements Serializable{
 
     }
 
+    public Credit(){
+    }
+
     public void add(Person person, String role){
         creditMap.put(person, role);
 
@@ -25,7 +28,7 @@ public class Credit implements Serializable{
         return this.creditMap;
     }
 
-    public void setCreditMap(){
+    public void setCreditMap(HashMap<Person, String> tempMap){
         this.creditMap = creditMap;
     }
 

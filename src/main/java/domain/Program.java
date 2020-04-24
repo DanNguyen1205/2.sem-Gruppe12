@@ -54,7 +54,7 @@ public class Program implements Serializable{
         return this.credits.getCreditMap();
     }
 
-    public void setCredits(){
+    public void setCredits(Credit credit){
         this.credits = credits;
     }
 
