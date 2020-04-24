@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
-public class Credit implements Serializable {
+public class Credit implements Serializable{
     private String finalString;
     private String uniqueID = UUID.randomUUID().toString();
     private HashMap<Person, String> creditMap = new HashMap<Person, String>();

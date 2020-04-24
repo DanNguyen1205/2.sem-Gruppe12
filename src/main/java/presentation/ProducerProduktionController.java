@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ProducerProduktionController {
+public class ProducerProduktionController{
     public void GoBack(ActionEvent Clicked) throws IOException {
 
         Parent newProductionViewParent = FXMLLoader.load(getClass().getResource("producerView.fxml"));

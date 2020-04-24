@@ -1,6 +1,6 @@
 package presentation;
 
-public class AdminViewController {
+public class AdminViewController{
 
 
 }

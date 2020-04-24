@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class StartViewController {
 
-    public void goNextPushed(ActionEvent goNextClicked) throws IOException {
+    public void goNextPushed(ActionEvent goNextClicked) throws IOException{
 
         Parent AdminViewParent = FXMLLoader.load(getClass().getResource("SearchView.fxml"));
         Scene AdminViewScene = new Scene(AdminViewParent);

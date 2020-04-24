@@ -23,7 +23,7 @@ import domain.Login;
 import javafx.stage.Stage;
 
 
-public class AdminLoginController {
+public class AdminLoginController{
     Login login = new Login();
     boolean loggedIn;
 

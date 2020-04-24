@@ -3,7 +3,7 @@ package domain;
 import java.io.*;
 import java.util.*;
 
-public class SearchSystem {
+public class SearchSystem{
 
     //Use Sets so we dont get duplicates of programs/persons
     private Set programSet = new HashSet<Program>();

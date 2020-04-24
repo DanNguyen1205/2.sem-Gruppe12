@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ProducerViewController {
+public class ProducerViewController{
 
     public void exitFromProducerPushed(ActionEvent Clicked) throws IOException {
 

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 
-public class SearchViewController implements Initializable {
+public class SearchViewController implements Initializable{
     SearchSystem searchSystem;
 
     ObservableList<Program> observableList;

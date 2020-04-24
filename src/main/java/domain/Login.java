@@ -10,7 +10,7 @@ public class Login {
     private ArrayList<Account> accountsList;
 
 
-    public void makeAccounts() {
+    public void makeAccounts(){
         try {
             accountsList = new ArrayList<>();
             //Scanner to read file, to get every account information (username and pass)

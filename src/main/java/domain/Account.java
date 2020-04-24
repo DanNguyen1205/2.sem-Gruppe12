@@ -1,6 +1,6 @@
 package domain;
 
-public class Account {
+public class Account{
     String username;
     String password;
 

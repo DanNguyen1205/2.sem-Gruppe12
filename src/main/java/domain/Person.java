@@ -3,7 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Person implements Serializable {
+public class Person implements Serializable{
     private String uniqueID = UUID.randomUUID().toString();
     private String name;
     private String email;
