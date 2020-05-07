@@ -11,7 +11,7 @@ public class Credit implements Serializable{
     private String uniqueID = UUID.randomUUID().toString();
     private HashMap<Person, String> creditMap = new HashMap<Person, String>();
 
-    Credit(HashMap creditMap){
+    public Credit(HashMap creditMap){
         this.creditMap=creditMap;
 
     }

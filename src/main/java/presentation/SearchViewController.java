@@ -70,9 +70,9 @@ public class SearchViewController implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Initiate the SearchSystem object so we can create and read the credits.
-        searchSystem =  new SearchSystem();
-        searchSystem.createCredits();
-        searchSystem.readCredits();
+        searchSystem = new SearchSystem();
+
+        searchSystem.loadCredits();
 
         observableList = FXCollections.observableArrayList();
         listView.setItems(observableList);

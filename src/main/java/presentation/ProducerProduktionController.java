@@ -3,6 +3,7 @@ package presentation;
 import domain.Credit;
 import domain.Person;
 import domain.Program;
+import domain.SearchSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -62,7 +63,8 @@ public class ProducerProduktionController implements Initializable {
     Program program;
     Person person;
     Credit credit;
-    ObjectOutputStream outputStream;
+
+    SearchSystem ss;
 
     ObservableList<Person> observableList;
     @FXML
@@ -83,8 +85,10 @@ public class ProducerProduktionController implements Initializable {
     public void productionEventHandler(ActionEvent event) {
         //If you press the insert button for production
         if (event.getSource() == insertProductionButton) {
+            //Checks if all the text fields are fileld out
             if (titleField.getText().isEmpty() || producerField.getText().isEmpty() || releaseDateField.getText().isEmpty()) {
                 productionLabel.setText("Insert all fields please. Dumbfuck");
+                //If they are filled out then make a new program with the information.
             } else {
                 productionLabel.setText("");
                 String title = titleField.getText();
@@ -114,8 +118,10 @@ public class ProducerProduktionController implements Initializable {
     public void creditEventHandler(ActionEvent event) {
         //If the insert button is pressed for credit
         if (event.getSource() == insertCreditButton) {
+            //If all the fields are not filled out
             if (personNameField.getText().isEmpty() || roleField.getText().isEmpty() || emailField.getText().isEmpty() || phoneField.getText().isEmpty()) {
                 creditLabel.setText("Insert all fields");
+                //If the fields are filled out update the observable list with the persons.
             } else {
                 String name = personNameField.getText();
                 String role = roleField.getText();
@@ -161,33 +167,26 @@ public class ProducerProduktionController implements Initializable {
             tempMap.put(e, e.getRole());
         }
 
-        //Make the program
-        credit = new Credit();
-        credit.setCreditMap(tempMap);
+        //Make a program
+        credit = new Credit(tempMap);
         program.setCredits(credit);
 
-        //Send the program to the temp binary file that the admin has to confirm
-        try {
-            outputStream.writeObject(program);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("Done submitting...");
+        //Show that we've actually made a credit.
+        System.out.println(program.showCredit());
+
+        //add the program to the binary file
+        ss.addProgram(program);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ss = new SearchSystem();
+
+        //ss.createCredits();
+        //ss.createCredits();
         observableList = FXCollections.observableArrayList();
         listView.setItems(observableList);
 
         editProductionButton.setDisable(true);
-
-        //Make a new binary file to put in new programs and their credits. This binary file needs to be checked by a system adminstrator
-        // before they are allowed into the main binary file that the search system uses.
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("temporary.dat", true));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
