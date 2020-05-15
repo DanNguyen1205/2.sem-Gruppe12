@@ -1,8 +1,10 @@
 package presentation;
 
-import domain.Credit;
-import domain.Person;
-import domain.Program;
+import data.Credit;
+import data.Person;
+import data.Program;
+import domain.CreditFactory;
+import domain.ProgramFactory;
 import domain.SearchSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +21,6 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ProducerProduktionController implements Initializable {
@@ -46,8 +47,6 @@ public class ProducerProduktionController implements Initializable {
     @FXML
     TextField emailField;
     @FXML
-    TextField phoneField;
-    @FXML
     Button insertCreditButton;
     @FXML
     Button editCreditButton;
@@ -59,10 +58,12 @@ public class ProducerProduktionController implements Initializable {
     @FXML
     Button submitButton;
 
-
+    //Attributes for creation of credits and programs
     Program program;
     Person person;
     Credit credit;
+    ProgramFactory pf;
+    CreditFactory cf;
 
     SearchSystem ss;
 
@@ -94,7 +95,10 @@ public class ProducerProduktionController implements Initializable {
                 String title = titleField.getText();
                 String producer = producerField.getText();
                 String releaseDate = releaseDateField.getText();
-                program = new Program(title, producer, releaseDate);
+
+                //Use program factory to make a new program
+                program = pf.createProgram(title, producer, releaseDate);
+
 
                 //Print the inserted program out in a textarea
                 productionArea.setText("Titel: " + program.getName() + "\nProducer: " + program.getProducer() + "\nUdgivelses Dato:  " + program.getReleaseDate());
@@ -119,27 +123,25 @@ public class ProducerProduktionController implements Initializable {
         //If the insert button is pressed for credit
         if (event.getSource() == insertCreditButton) {
             //If all the fields are not filled out
-            if (personNameField.getText().isEmpty() || roleField.getText().isEmpty() || emailField.getText().isEmpty() || phoneField.getText().isEmpty()) {
+            if (personNameField.getText().isEmpty() || roleField.getText().isEmpty() || emailField.getText().isEmpty()) {
                 creditLabel.setText("Insert all fields");
                 //If the fields are filled out update the observable list with the persons.
             } else {
                 String name = personNameField.getText();
                 String role = roleField.getText();
                 String email = emailField.getText();
-                String phoneNumber = phoneField.getText();
 
-                person = new Person(name, email, phoneNumber);
-                person.setRole(role);
+                Person newPerson = new Person(name,email, role);
 
-                observableList.add(person);
+                observableList.add(newPerson);
             }
         }
         //If the edit button is pressed for credits
         if (event.getSource() == editCreditButton) {
             String name = personNameField.getText();
-            String role = roleField.getText();
             String email = emailField.getText();
-            String phoneNumber = phoneField.getText();
+            String role = roleField.getText();
+
 
             Person selectedPerson = listView.getSelectionModel().getSelectedItem();
             observableList.remove(selectedPerson);
@@ -147,7 +149,7 @@ public class ProducerProduktionController implements Initializable {
             selectedPerson.setName(name);
             selectedPerson.setRole(role);
             selectedPerson.setEmail(email);
-            selectedPerson.setPhoneNumber(phoneNumber);
+
             observableList.add(selectedPerson);
         }
         //If the delete button is pressed
@@ -159,31 +161,25 @@ public class ProducerProduktionController implements Initializable {
 
     public void submitButton()
     {
-        //Use this HashMap to make a credit to put inside a program.
-        HashMap<Person, String> tempMap = new HashMap<Person, String>();
-
-        for(Person e : observableList)
-        {
-            tempMap.put(e, e.getRole());
-        }
-
-        //Make a program
-        credit = new Credit(tempMap);
-        program.setCredits(credit);
+        //Use creditFactory and programFactory methods to create a credit to put inside a program.
+        credit = cf.createCredit(cf.createCreditMap(observableList));
+        pf.setCreditToProgram(credit, program);
 
         //Show that we've actually made a credit.
         System.out.println(program.showCredit());
 
         //add the program to the binary file
-        ss.addProgram(program);
+        pf.addProgram(program);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        //Initialize the factories so we can create programs and credits.
+        pf = new ProgramFactory();
+        cf = new CreditFactory();
+
         ss = new SearchSystem();
 
-        //ss.createCredits();
-        //ss.createCredits();
         observableList = FXCollections.observableArrayList();
         listView.setItems(observableList);
 

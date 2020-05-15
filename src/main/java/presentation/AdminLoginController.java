@@ -1,13 +1,8 @@
 package presentation;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
-import domain.Account;
+
+import data.Account;
 
 
 import javafx.event.ActionEvent;
@@ -38,8 +33,6 @@ public class AdminLoginController{
     @FXML
     private void login(ActionEvent loginClicked)throws IOException {
         //Use login object to make accounts
-        login.makeAccounts();
-
         String inputUserID = this.userID.getText();
         String inputPasswordID = this.passwordID.getText();
 

@@ -1,6 +1,6 @@
 package presentation;
 
-import domain.Account;
+import data.Account;
 import domain.Login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +16,6 @@ import java.io.IOException;
 
 public class ProducerLoginController{
     Login login = new Login();
-    boolean loggedIn;
 
     @FXML
     TextField ProducerID, ProducerKodeID;
@@ -27,8 +26,6 @@ public class ProducerLoginController{
     @FXML
     private void ProducerLogin(ActionEvent loginClicked)throws IOException {
         //Use login object to make accounts
-        login.makeAccounts();
-
         String inputUserID = this.ProducerID.getText();
         String inputPasswordID = this.ProducerKodeID.getText();
 
@@ -37,21 +34,19 @@ public class ProducerLoginController{
         //This line gets the Stage information
         Stage window = (Stage) ((Node) loginClicked.getSource()).getScene().getWindow();
 
-        for(Account e : login.getAccountsList()) {
-            if(e.getUsername().equalsIgnoreCase(inputUserID) && e.getPassword().equalsIgnoreCase(inputPasswordID))
-            {
-                loggedIn = true;
-                window.setTitle("Logget ind som producer");
-                window.setScene(producerViewScene);
-                window.show();
-                break;
-            }
-            else
-            {
-                loggedIn = false;
-            }
+
+        if(login.checkIfLoginCorrect(inputUserID, inputPasswordID))
+        {
+            window.setTitle("Logget ind som producer");
+            window.setScene(producerViewScene);
+            window.show();
+            System.out.println("Logged in successful");
         }
-        System.out.println("logged in is " + loggedIn);
+        else
+        {
+            System.out.println("Logged in failed.");
+        }
+
     }
 
 

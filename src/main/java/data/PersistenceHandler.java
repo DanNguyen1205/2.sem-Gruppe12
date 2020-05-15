@@ -1,125 +1,170 @@
 package data;
 
-import domain.Credit;
-import domain.Person;
-import domain.Program;
-import javafx.collections.ObservableList;
-
 import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
+
 
 public class PersistenceHandler {
-    //Setting up streams to read and write to our files
-    private ObjectOutputStream outputStream;
-    private ObjectInputStream inputStream;
+    String SQL_INSERT_PRODUCTION = "INSERT INTO production (name, release_Date, producer) VALUES (?,?,?)";
+    String SQL_INSERT_PERSON = "INSERT INTO person (name, email) VALUES (?,?)";
+    String SQL_INSERT_PERSONTOCREDIT = "INSERT INTO persontocredit (role, productions_fk, persons_fk) VALUES (?,?,?)";
 
-    private String fileName = "credits.dat";
+
 
     //Array to hold the programs from the file
     private ArrayList<Program> programList = null;
-
     ArrayList<Program> programsArray = new ArrayList<>();
+    ArrayList<Account> accountArrayList = new ArrayList<>();
 
-    Credit credit;
-    Program program;
-
-
-
-    //This method creates credits
-    public void createCredits() {
-        //Create credit and program objects
-        HashMap<Person, String> creditHashMap1 = new HashMap<>();
-        creditHashMap1.put(new Person("John Doe", "Johndoe@gmail.com", "11223344"), "Director");
-        creditHashMap1.put(new Person("Pepper Doe", "Pepperdoe@gmail.com", "22334455"), "Assistant director");
-
-        Credit credit1 = new Credit(creditHashMap1);
-        Program program1 = new Program("Rooftop Prince", credit1, "12/05/1999", "Jill Valentine");
-
-        HashMap<Person, String> creditHashMap2 = new HashMap<>();
-        creditHashMap2.put(new Person("Nanna Doe", "Nannadoe@gmail.com", "33445566"), "Executive producer");
-        creditHashMap2.put(new Person("Bob Doe", "Bobdoe@gmail.com", "44556677"), "Music");
-
-        Credit credit2 = new Credit(creditHashMap2);
-        Program program2 = new Program("The Intouchables", credit2, "12/06/1994", "Lirik");
-
-        //Put those programs into the array for the binary file.
-        programsArray.add(program1);
-        programsArray.add(program2);
-
-        //Make a outputStream to write credit array to the file
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream(fileName, true));
-            //outputStream.writeObject(programsArray);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    //Singleton stuff
+    private PersistenceHandler() {
+        dbconfig db = new dbconfig();
     }
-
-    public void createFiles()
+    private static PersistenceHandler singletonInstance = new PersistenceHandler();
+    //Method to get the singleton object.
+    public static PersistenceHandler getInstance()
     {
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        return singletonInstance;
     }
 
 
     //Reads the array from the binary file and returns it.
     public ArrayList<Program> loadCredits() {
-        //Make inputStream to read objects from the file
-        try {
-            inputStream = new ObjectInputStream(new FileInputStream(fileName));
-            programList = (ArrayList<Program>) inputStream.readObject();
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        programList = new ArrayList<>();
+
 
         return programList;
-
-        //Commented out but it reads the programs we have loaded in.
-/*        for (Program e : programList) {
-            System.out.println(e);
-            System.out.println("\n");
-        }*/
     }
 
 
 
-    //Method for adding a production
-    public void addProduction(Program program)
+    //Method for adding a production and its credits
+    public void addToDatabase(Program program) throws SQLException
     {
-        //Load in the credits before we overwrite whats inside.
-        programsArray = loadCredits();
+        //Foreign keys used for when inserting persontocredit table
+        long production_fk;
+        long persons_fk;
 
-        //Create stream so we can write to the file. Deletes everything in the binary file.
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream(fileName));
-        } catch (IOException e) {
+        try (PreparedStatement insertProdStatement = dbconfig.connection.prepareStatement(SQL_INSERT_PRODUCTION,
+                Statement.RETURN_GENERATED_KEYS);
+        ) {
+            insertProdStatement.setString(1, program.getName());
+            insertProdStatement.setString(2, program.getReleaseDate());
+            insertProdStatement.setString(3, program.getProducer());
+
+            int affectedRows = insertProdStatement.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Creating user failed, no rows affected.");
+            }
+
+            //Block of code to get the insert key for the program
+            try (ResultSet generatedKeys = insertProdStatement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    program.setId(generatedKeys.getLong(1));
+                    production_fk = generatedKeys.getLong(1);
+                    System.out.println("The insert primary key for " + program.getName() + " is: " + production_fk);
+                } else {
+                    throw new SQLException("Creating user failed, no ID obtained.");
+                }
+            }
+        }
+
+            //Insert for persons
+            try (
+                    PreparedStatement insertPersonStatement = dbconfig.connection.prepareStatement(SQL_INSERT_PERSON,
+                            Statement.RETURN_GENERATED_KEYS);
+            ) {
+                //Loop through the HashMap that contains the persons involved in the program.
+                for(Map.Entry<Person, String> entry : program.getCredit().getCreditMap().entrySet())
+                {
+                    Person key = entry.getKey();
+                    String value = entry.getValue();
+
+                    //Check if theresa duplicate in the database if not, then we insert
+                    ResultSet CheckForDuplicateSetqueryForMatch = queryForMatch(key.getEmail());
+                    if(CheckForDuplicateSetqueryForMatch.next() == false)
+                    {
+                        insertPersonStatement.setString(1, key.getName());
+                        insertPersonStatement.setString(2, key.getEmail());
+
+                        int affectedRows = insertPersonStatement.executeUpdate();
+
+                        if (affectedRows == 0) {
+                            throw new SQLException("Creating user failed, no rows affected.");
+                        }
+
+                        //Block of code to get the insert id from the person statement
+                        try (ResultSet generatedKeys = insertPersonStatement.getGeneratedKeys()) {
+                            if (generatedKeys.next()) {
+                                persons_fk = generatedKeys.getLong(1);
+                                System.out.println("The insert primary key for " + key.getName() + " is: " + generatedKeys.getLong(1));
+                            } else {
+                                throw new SQLException("Creating user failed, no ID obtained.");
+                            }
+                        }
+                        //Use the insertoperson method
+                        insertPersonToCreditMethod(key.getRole(), production_fk, persons_fk);
+                    }
+                    //If a duplicate does exist we dont add any person to the person table
+                    //Instead we insert into persontocredit table with existing id from that person already in the database.
+                    else
+                    {
+                        insertPersonToCreditMethod(key.getRole(), production_fk, CheckForDuplicateSetqueryForMatch.getLong("id"));
+                    }
+                }
+            }
+    }
+
+    public void insertPersonToCreditMethod(String role, long produtions_id, long persons_id) {
+        try (PreparedStatement insertPersonToCreditStatement = dbconfig.connection.prepareStatement(SQL_INSERT_PERSONTOCREDIT);) {
+            insertPersonToCreditStatement.setString(1, role);
+            insertPersonToCreditStatement.setLong(2, produtions_id);
+            insertPersonToCreditStatement.setLong(3, persons_id);
+            insertPersonToCreditStatement.execute();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
 
-        //Add the program we want, since we loaded everything is still intact.
-        programsArray.add(program);
-        //Print everything to check we got the all the content
-        for(Program e : programsArray)
-        {
-            System.out.println(e);
-        }
 
-        //Finally write the array into the binary file
-        try {
-            outputStream.writeObject(programsArray);
-            outputStream.flush();
-        } catch (IOException e) {
+    //Method to load in the accounts
+    public ArrayList<Account> loadAccounts()
+    {
+        try (PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM account");) {
+            ResultSet resultSet = queryStatement.executeQuery();
+
+            while (resultSet.next()) {
+                long id = resultSet.getLong("id");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+
+                Account newAccount = new Account(username, password);
+                newAccount.setId(id);
+
+                accountArrayList.add(newAccount);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println("Done submitting...");
+        return accountArrayList;
+    }
+
+    //Method to check for duplicate persons
+    public ResultSet queryForMatch(String cpr)
+    {
+        ResultSet resultSet = null;
+        try {
+            PreparedStatement queryformatch = dbconfig.connection.prepareStatement("SELECT * FROM person WHERE email = ?");
+            queryformatch.setString(1, cpr);
+            resultSet = queryformatch.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 
 

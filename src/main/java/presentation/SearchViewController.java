@@ -1,6 +1,6 @@
 package presentation;
 
-import domain.Program;
+import data.Program;
 import domain.SearchSystem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -71,7 +71,6 @@ public class SearchViewController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Initiate the SearchSystem object so we can create and read the credits.
         searchSystem = new SearchSystem();
-
         searchSystem.loadCredits();
 
         observableList = FXCollections.observableArrayList();

@@ -1,40 +1,48 @@
 package domain;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import data.Account;
+import data.PersistenceHandler;
+
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Login {
 
+    //Arraylist to hold the accounts
     private ArrayList<Account> accountsList;
+    PersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 
 
-    public void makeAccounts(){
-        try {
-            accountsList = new ArrayList<>();
-            //Scanner to read file, to get every account information (username and pass)
-            File accountFile = new File("AccountFiles.txt");
-            Scanner fileScanner = new Scanner(accountFile);
+    public Login()
+    {
+        //Load in the accounts to the arraylist
+        setAccountsList(persistenceHandler.loadAccounts());
+    }
 
-            //The loop reads the file and makes account classes.
-            while(fileScanner.hasNext())
+    //Method that the controller is gonna call to check if login info is correct.
+    public boolean checkIfLoginCorrect(String username, String password)
+    {
+        boolean loggedin = false;
+        for(Account e : accountsList)
+        {
+            if(e.getUsername().equals(username) && e.getPassword().equals(password))
             {
-                String tempString = fileScanner.nextLine();
-                String[] tempArray = tempString.split(";");
-                Account tempAccount = new Account(tempArray[0], tempArray[1]);
-                accountsList.add(tempAccount);
-
+                loggedin = true;
+                break;
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("This shit don goofed");
+            else
+            {
+                loggedin = false;
+                break;
+            }
         }
-
+        return loggedin;
     }
 
     public ArrayList<Account> getAccountsList() {
         return accountsList;
     }
 
-
+    public void setAccountsList(ArrayList<Account> accountsList) {
+        this.accountsList = accountsList;
+    }
 }

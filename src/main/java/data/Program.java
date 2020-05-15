@@ -1,11 +1,11 @@
-package domain;
+package data;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.UUID;
 
 public class Program implements Serializable{
-    private String uniqueID = UUID.randomUUID().toString();
+    private long id;
     private String name;
     private Credit credits;
     private String releaseDate;
@@ -14,7 +14,6 @@ public class Program implements Serializable{
 
 
     public Program(String name, Credit credits, String releaseDate, String producer){
-        this.uniqueID = uniqueID;
         this.name = name;
         this.credits = credits;
         this.releaseDate = releaseDate;
@@ -23,22 +22,18 @@ public class Program implements Serializable{
 
     // constructor for when u make a progrma without its credits.
     public Program(String name, String releaseDate, String producer){
-        this.uniqueID = uniqueID;
         this.name = name;
         this.releaseDate = releaseDate;
         this.producer = producer;
     }
 
-
-    //Getter and setter for uniqueID
-    public String getUniqueID(){
-        return this.uniqueID;
+    public long getId() {
+        return id;
     }
 
-    public void setUniqueID(){
-        this.uniqueID = uniqueID;
+    public void setId(long id) {
+        this.id = id;
     }
-
 
     //Getter and setter for name attribute
     public String getName(){
@@ -50,8 +45,8 @@ public class Program implements Serializable{
     }
 
     //Getter and setter for credits attribute
-    public HashMap getCredits(){
-        return this.credits.getCreditMap();
+    public Credit getCredit(){
+        return this.credits;
     }
 
     public void setCredits(Credit credit){

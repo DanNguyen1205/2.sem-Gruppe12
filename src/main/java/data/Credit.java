@@ -1,15 +1,14 @@
-package domain;
+package data;
+
+import data.Person;
 
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.UUID;
 
-public class Credit implements Serializable{
+public class Credit{
     private String finalString;
-    private String uniqueID = UUID.randomUUID().toString();
-    private HashMap<Person, String> creditMap = new HashMap<Person, String>();
+    HashMap<Person, String> creditMap = new HashMap<>();
 
     public Credit(HashMap creditMap){
         this.creditMap=creditMap;
@@ -24,7 +23,7 @@ public class Credit implements Serializable{
 
     }
 
-    public HashMap getCreditMap(){
+    public HashMap<Person, String> getCreditMap(){
         return this.creditMap;
     }
 
@@ -34,11 +33,12 @@ public class Credit implements Serializable{
 
     @Override
     public String toString() {
-        finalString = "";
-        creditMap.forEach((key, value) -> {
-            finalString += value + ": " + key + "\n";
-        });
-        return finalString;
+        String returnString = "";
+        for(Map.Entry<Person, String> entry : creditMap.entrySet())
+        {
+            returnString += "Person: " + entry.getKey().getName() + ", Role: " + entry.getValue() + "\n";
+        }
+        return returnString;
     }
 
 

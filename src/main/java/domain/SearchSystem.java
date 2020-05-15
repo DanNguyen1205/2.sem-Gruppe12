@@ -1,9 +1,9 @@
 package domain;
 
 import data.PersistenceHandler;
-import javafx.collections.ObservableList;
+import data.Person;
+import data.Program;
 
-import java.io.*;
 import java.util.*;
 
 public class SearchSystem{
@@ -12,25 +12,14 @@ public class SearchSystem{
     private Set programSet = new HashSet<Program>();
     private Set personSet = new HashSet<Person>();
 
-    //Set up streams to write and read from the file
-    private ObjectOutputStream outputStream;
-    private ObjectInputStream inputStream;
-
-    private String fileName;
     private ArrayList<Program> programList = null;
 
-    //PersistenceHandler that we call load and save methods from
-    PersistenceHandler persistenceHandler = new PersistenceHandler();
+    //PersistenceHandler that we call load and save methods from. Singleton object.
+    PersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
 
     public SearchSystem() {
-        fileName = "credits.dat";
     }
 
-    //This method calls perstistence handler method to create the credits. Temporary because we just want credits to check on for now.
-    public void createCredits() {
-        persistenceHandler.createFiles();
-        //persistenceHandler.createCredits();
-    }
 
     //This method calls persistence handler method to load in the credits that we have created.
     public void loadCredits() {
@@ -49,11 +38,6 @@ public class SearchSystem{
             }
         }
         return tempArray;
-    }
-
-    //A method for adding a program.
-    public void addProgram(Program program) {
-        persistenceHandler.addProduction(program);
     }
 
     //A method for adding a person.
