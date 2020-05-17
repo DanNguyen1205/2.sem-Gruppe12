@@ -14,10 +14,12 @@ public class PersistenceHandler {
 
 
 
-    //Array to hold the programs from the file
-    private ArrayList<Program> programList = null;
-    ArrayList<Program> programsArray = new ArrayList<>();
+    //Arrays to hold the data from the database
     ArrayList<Account> accountArrayList = new ArrayList<>();
+    ArrayList<Person> personArrayList = new ArrayList<>();
+    ArrayList<Program> programArrayList = new ArrayList<>();
+    ArrayList<personToCredit> personToCreditsArrayList = new ArrayList<>();
+
 
     //Singleton stuff
     private PersistenceHandler() {
@@ -29,16 +31,6 @@ public class PersistenceHandler {
     {
         return singletonInstance;
     }
-
-
-    //Reads the array from the binary file and returns it.
-    public ArrayList<Program> loadCredits() {
-        programList = new ArrayList<>();
-
-
-        return programList;
-    }
-
 
 
     //Method for adding a production and its credits
@@ -130,8 +122,91 @@ public class PersistenceHandler {
         }
     }
 
+    //Method to check for duplicate persons
+    public ResultSet queryForMatch(String cpr)
+    {
+        ResultSet resultSet = null;
+        try {
+            PreparedStatement queryformatch = dbconfig.connection.prepareStatement("SELECT * FROM person WHERE email = ?");
+            queryformatch.setString(1, cpr);
+            resultSet = queryformatch.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
+    }
 
-    //Method to load in the accounts
+    //---------------------------------------------------------------------------------------------
+    //Methods for loading in the data from the database.
+
+    public ArrayList<Program> loadPrograms()
+    {
+        try(PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM production");) {
+            ResultSet resultSet = queryStatement.executeQuery();
+
+            while(resultSet.next())
+            {
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String release_date = resultSet.getString("release_date");
+                String producer = resultSet.getString("producer");
+
+                Program newProduction = new Program(name, release_date, producer);
+                newProduction.setId(id);
+                Credit newCredit = new Credit();
+                newProduction.setCredits(newCredit);
+
+                programArrayList.add(newProduction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return programArrayList;
+    }
+
+    public ArrayList<Person> loadPersons() {
+        personArrayList.clear();
+        try (PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM person");) {
+            ResultSet resultSet = queryStatement.executeQuery();
+
+            while (resultSet.next()) {
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                String email = resultSet.getString("email");
+
+                Person newPerson = new Person(name, email);
+                newPerson.setId(id);
+
+                personArrayList.add(newPerson);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personArrayList;
+    }
+
+    public ArrayList<personToCredit> loadPersonToCredit()
+    {
+        try(PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM persontocredit");) {
+            ResultSet resultSet = queryStatement.executeQuery();
+
+            while(resultSet.next())
+            {
+                long id = resultSet.getLong("id");
+                String role = resultSet.getString("role");
+                long productions_fk = resultSet.getLong("productions_fk");
+                long persons_fk = resultSet.getLong("persons_fk");
+
+                personToCredit newPersonToCredit = new personToCredit(id, role, productions_fk, persons_fk);
+
+                personToCreditsArrayList.add(newPersonToCredit);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personToCreditsArrayList;
+    }
+
     public ArrayList<Account> loadAccounts()
     {
         try (PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM account");) {
@@ -151,20 +226,6 @@ public class PersistenceHandler {
             e.printStackTrace();
         }
         return accountArrayList;
-    }
-
-    //Method to check for duplicate persons
-    public ResultSet queryForMatch(String cpr)
-    {
-        ResultSet resultSet = null;
-        try {
-            PreparedStatement queryformatch = dbconfig.connection.prepareStatement("SELECT * FROM person WHERE email = ?");
-            queryformatch.setString(1, cpr);
-            resultSet = queryformatch.executeQuery();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return resultSet;
     }
 
 

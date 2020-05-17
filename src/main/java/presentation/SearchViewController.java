@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 
 public class SearchViewController implements Initializable{
     SearchSystem searchSystem;
+    ArrayList<Program> tempArray;
 
     ObservableList<Program> observableList;
     @FXML
@@ -52,7 +53,7 @@ public class SearchViewController implements Initializable{
     {
         observableList.clear();
         String keyWord = searchField.getText();
-        ArrayList<Program> tempArray = searchSystem.searchProgram(keyWord);
+        tempArray = searchSystem.searchProgram(keyWord);
 
         for(Program e : tempArray)
         {
@@ -71,7 +72,7 @@ public class SearchViewController implements Initializable{
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //Initiate the SearchSystem object so we can create and read the credits.
         searchSystem = new SearchSystem();
-        searchSystem.loadCredits();
+        searchSystem.completeLoad();
 
         observableList = FXCollections.observableArrayList();
         listView.setItems(observableList);

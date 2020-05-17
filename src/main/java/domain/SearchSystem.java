@@ -3,16 +3,14 @@ package domain;
 import data.PersistenceHandler;
 import data.Person;
 import data.Program;
+import data.personToCredit;
 
 import java.util.*;
 
 public class SearchSystem{
-
-    //Use Sets so we dont get duplicates of programs and persons
-    private Set programSet = new HashSet<Program>();
-    private Set personSet = new HashSet<Person>();
-
-    private ArrayList<Program> programList = null;
+    ArrayList<Person> personArrayList = new ArrayList<>();
+    ArrayList<Program> programArrayList = new ArrayList<>();
+    ArrayList<personToCredit> personToCreditsArrayList = new ArrayList<>();
 
     //PersistenceHandler that we call load and save methods from. Singleton object.
     PersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
@@ -22,47 +20,50 @@ public class SearchSystem{
 
 
     //This method calls persistence handler method to load in the credits that we have created.
-    public void loadCredits() {
-        programList = persistenceHandler.loadCredits();
+    public void completeLoad() {
+        programArrayList = persistenceHandler.loadPrograms();
+        personArrayList = persistenceHandler.loadPersons();
+        personToCreditsArrayList = persistenceHandler.loadPersonToCredit();
+
+        //Loop through productiosnArrayList
+        for(Program programElement : programArrayList)
+        {
+            System.out.println("For program: " + programElement.getName());
+            //Loop through personToCreditsArrayList to find matching id's
+            for(personToCredit personToCreditElement : personToCreditsArrayList)
+            {
+                //If the id's match then loop through personArrayList to find persons_fk and persons id
+                if(programElement.getId() == personToCreditElement.getProductions_fk())
+                {
+                    //looping through persons
+                    for(Person personElement : personArrayList)
+                    {
+                        if(personElement.getId() == personToCreditElement.getPersons_fk())
+                        {
+                            Person newPerson = new Person(personElement.getName(), personElement.getEmail());
+                            newPerson.setId(personElement.getId());
+
+                            System.out.println("Adding " + personElement.getName() + " with role: " + personToCreditElement.getRole());
+                            newPerson.setRole(personToCreditElement.getRole());
+                            programElement.getPersonArrayList().add(newPerson);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //This method saerches for a program and puts it into an array to return.
     public ArrayList<Program> searchProgram(String keyWord)
     {
-        ArrayList<Program> tempArray = new ArrayList<>();
-        for(Program e : programList)
+        ArrayList<Program> returnArray = new ArrayList<>();
+        for(Program e : programArrayList)
         {
             if(e.getName().toLowerCase().contains(keyWord.toLowerCase()))
             {
-                tempArray.add(e);
+                returnArray.add(e);
             }
         }
-        return tempArray;
+        return returnArray;
     }
-
-    //A method for adding a person.
-    public void addPerson(Person person) {
-        personSet.add(person);
-    }
-
-
-    //Setter and getter for program
-    public Set<Program> getProgram() {
-        return this.programSet;
-    }
-
-    public void setProgram() {
-        this.programSet = programSet;
-
-    }
-
-    //Setter and getter for person
-    public Set<Person> getPerson() {
-        return this.personSet;
-    }
-
-    public void setPerson() {
-        this.personSet = personSet;
-    }
-
 }

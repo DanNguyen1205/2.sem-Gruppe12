@@ -1,6 +1,7 @@
 package data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -10,8 +11,7 @@ public class Program implements Serializable{
     private Credit credits;
     private String releaseDate;
     private String producer;
-
-
+    private ArrayList<Person> personArrayList = new ArrayList<>();
 
     public Program(String name, Credit credits, String releaseDate, String producer){
         this.name = name;
@@ -73,6 +73,18 @@ public class Program implements Serializable{
         this.producer = producer;
     }
 
+    public Credit getCredits() {
+        return credits;
+    }
+
+    public ArrayList<Person> getPersonArrayList() {
+        return personArrayList;
+    }
+
+    public void setPersonArrayList(ArrayList<Person> personArrayList) {
+        this.personArrayList = personArrayList;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -80,8 +92,14 @@ public class Program implements Serializable{
 
     public String showCredit()
     {
+        String persosnString = "";
+        for(Person e : personArrayList)
+        {
+            persosnString += e + "\n";
+        }
+
         String finalString = "";
-        return finalString = "Kreditter til " + name + ":" +" \n" + credits;
+        return finalString = "Kreditter til " + name + ":" + "\n" + persosnString;
     }
 
 }

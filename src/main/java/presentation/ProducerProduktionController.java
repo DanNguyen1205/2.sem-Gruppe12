@@ -88,7 +88,7 @@ public class ProducerProduktionController implements Initializable {
         if (event.getSource() == insertProductionButton) {
             //Checks if all the text fields are fileld out
             if (titleField.getText().isEmpty() || producerField.getText().isEmpty() || releaseDateField.getText().isEmpty()) {
-                productionLabel.setText("Insert all fields please. Dumbfuck");
+                productionLabel.setText("Insert all fields please.");
                 //If they are filled out then make a new program with the information.
             } else {
                 productionLabel.setText("");
@@ -97,7 +97,7 @@ public class ProducerProduktionController implements Initializable {
                 String releaseDate = releaseDateField.getText();
 
                 //Use program factory to make a new program
-                program = pf.createProgram(title, producer, releaseDate);
+                program = pf.createProgram(title, releaseDate, producer);
 
 
                 //Print the inserted program out in a textarea
