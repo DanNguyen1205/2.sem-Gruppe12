@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -21,6 +22,8 @@ public class ProducerLoginController{
     TextField ProducerID, ProducerKodeID;
     @FXML
     Button logIndProducerBtn;
+    @FXML
+    Label notifierlbl;
 
 
     @FXML
@@ -45,15 +48,10 @@ public class ProducerLoginController{
         else
         {
             System.out.println("Logged in failed.");
+            notifierlbl.setText("Forkert kodeord! Prøv igen");
         }
 
     }
-
-
-
-
-
-
 
 
     //This method will go back to the startView
