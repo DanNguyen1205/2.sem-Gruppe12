@@ -1,9 +1,7 @@
 package data;
 
-import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -18,12 +16,12 @@ public class PersistenceHandler {
     ArrayList<Account> accountArrayList = new ArrayList<>();
     ArrayList<Person> personArrayList = new ArrayList<>();
     ArrayList<Program> programArrayList = new ArrayList<>();
-    ArrayList<personToCredit> personToCreditsArrayList = new ArrayList<>();
+    ArrayList<PersonToCredit> personToCreditsArrayList = new ArrayList<>();
 
 
     //Singleton stuff
     private PersistenceHandler() {
-        dbconfig db = new dbconfig();
+        Dbconfig db = new Dbconfig();
     }
     private static PersistenceHandler singletonInstance = new PersistenceHandler();
     //Method to get the singleton object.
@@ -40,7 +38,7 @@ public class PersistenceHandler {
         long production_fk;
         long persons_fk;
 
-        try (PreparedStatement insertProdStatement = dbconfig.connection.prepareStatement(SQL_INSERT_PRODUCTION,
+        try (PreparedStatement insertProdStatement = Dbconfig.connection.prepareStatement(SQL_INSERT_PRODUCTION,
                 Statement.RETURN_GENERATED_KEYS);
         ) {
             insertProdStatement.setString(1, program.getName());
@@ -67,7 +65,8 @@ public class PersistenceHandler {
 
             //Insert for persons
             try (
-                    PreparedStatement insertPersonStatement = dbconfig.connection.prepareStatement(SQL_INSERT_PERSON,
+                    PreparedStatement insertPersonStatement = Dbconfig.connection.prepareStatement(
+                            SQL_INSERT_PERSON,
                             Statement.RETURN_GENERATED_KEYS);
             ) {
                 //Loop through the HashMap that contains the persons involved in the program.
@@ -93,7 +92,8 @@ public class PersistenceHandler {
                         try (ResultSet generatedKeys = insertPersonStatement.getGeneratedKeys()) {
                             if (generatedKeys.next()) {
                                 persons_fk = generatedKeys.getLong(1);
-                                System.out.println("The insert primary key for " + key.getName() + " is: " + generatedKeys.getLong(1));
+                                System.out.println("The insert primary key for " + key.getName()
+                                        + " is: " + generatedKeys.getLong(1));
                             } else {
                                 throw new SQLException("Creating user failed, no ID obtained.");
                             }
@@ -105,14 +105,15 @@ public class PersistenceHandler {
                     //Instead we insert into persontocredit table with existing id from that person already in the database.
                     else
                     {
-                        insertPersonToCreditMethod(key.getRole(), production_fk, CheckForDuplicateSetqueryForMatch.getLong("id"));
+                        insertPersonToCreditMethod(key.getRole(), production_fk,
+                                CheckForDuplicateSetqueryForMatch.getLong("id"));
                     }
                 }
             }
     }
 
     public void insertPersonToCreditMethod(String role, long produtions_id, long persons_id) {
-        try (PreparedStatement insertPersonToCreditStatement = dbconfig.connection.prepareStatement(SQL_INSERT_PERSONTOCREDIT);) {
+        try (PreparedStatement insertPersonToCreditStatement = Dbconfig.connection.prepareStatement(SQL_INSERT_PERSONTOCREDIT);) {
             insertPersonToCreditStatement.setString(1, role);
             insertPersonToCreditStatement.setLong(2, produtions_id);
             insertPersonToCreditStatement.setLong(3, persons_id);
@@ -123,12 +124,13 @@ public class PersistenceHandler {
     }
 
     //Method to check for duplicate persons
-    public ResultSet queryForMatch(String cpr)
+    public ResultSet queryForMatch(String email)
     {
         ResultSet resultSet = null;
         try {
-            PreparedStatement queryformatch = dbconfig.connection.prepareStatement("SELECT * FROM person WHERE email = ?");
-            queryformatch.setString(1, cpr);
+            PreparedStatement queryformatch = Dbconfig.connection.prepareStatement(
+                    "SELECT * FROM person WHERE email = ?");
+            queryformatch.setString(1, email);
             resultSet = queryformatch.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -141,7 +143,8 @@ public class PersistenceHandler {
 
     public ArrayList<Program> loadPrograms()
     {
-        try(PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM production");) {
+        programArrayList.clear();
+        try(PreparedStatement queryStatement = Dbconfig.connection.prepareStatement("SELECT * FROM production");) {
             ResultSet resultSet = queryStatement.executeQuery();
 
             while(resultSet.next())
@@ -166,7 +169,7 @@ public class PersistenceHandler {
 
     public ArrayList<Person> loadPersons() {
         personArrayList.clear();
-        try (PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM person");) {
+        try (PreparedStatement queryStatement = Dbconfig.connection.prepareStatement("SELECT * FROM person");) {
             ResultSet resultSet = queryStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -185,9 +188,10 @@ public class PersistenceHandler {
         return personArrayList;
     }
 
-    public ArrayList<personToCredit> loadPersonToCredit()
+    public ArrayList<PersonToCredit> loadPersonToCredit()
     {
-        try(PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM persontocredit");) {
+        personToCreditsArrayList.clear();
+        try(PreparedStatement queryStatement = Dbconfig.connection.prepareStatement("SELECT * FROM persontocredit");) {
             ResultSet resultSet = queryStatement.executeQuery();
 
             while(resultSet.next())
@@ -197,7 +201,7 @@ public class PersistenceHandler {
                 long productions_fk = resultSet.getLong("productions_fk");
                 long persons_fk = resultSet.getLong("persons_fk");
 
-                personToCredit newPersonToCredit = new personToCredit(id, role, productions_fk, persons_fk);
+                PersonToCredit newPersonToCredit = new PersonToCredit(id, role, productions_fk, persons_fk);
 
                 personToCreditsArrayList.add(newPersonToCredit);
             }
@@ -209,7 +213,8 @@ public class PersistenceHandler {
 
     public ArrayList<Account> loadAccounts()
     {
-        try (PreparedStatement queryStatement = dbconfig.connection.prepareStatement("SELECT * FROM account");) {
+        accountArrayList.clear();
+        try (PreparedStatement queryStatement = Dbconfig.connection.prepareStatement("SELECT * FROM account");) {
             ResultSet resultSet = queryStatement.executeQuery();
 
             while (resultSet.next()) {

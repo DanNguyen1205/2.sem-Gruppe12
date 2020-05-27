@@ -3,14 +3,14 @@ package domain;
 import data.PersistenceHandler;
 import data.Person;
 import data.Program;
-import data.personToCredit;
+import data.PersonToCredit;
 
 import java.util.*;
 
 public class SearchSystem{
     ArrayList<Person> personArrayList = new ArrayList<>();
     ArrayList<Program> programArrayList = new ArrayList<>();
-    ArrayList<personToCredit> personToCreditsArrayList = new ArrayList<>();
+    ArrayList<PersonToCredit> personToCreditsArrayList = new ArrayList<>();
 
     //PersistenceHandler that we call load and save methods from. Singleton object.
     PersistenceHandler persistenceHandler = PersistenceHandler.getInstance();
@@ -21,6 +21,10 @@ public class SearchSystem{
 
     //This method calls persistence handler method to load in the credits that we have created.
     public void completeLoad() {
+        programArrayList.clear();
+        personArrayList.clear();
+        personToCreditsArrayList.clear();
+
         programArrayList = persistenceHandler.loadPrograms();
         personArrayList = persistenceHandler.loadPersons();
         personToCreditsArrayList = persistenceHandler.loadPersonToCredit();
@@ -30,7 +34,7 @@ public class SearchSystem{
         {
             System.out.println("For program: " + programElement.getName());
             //Loop through personToCreditsArrayList to find matching id's
-            for(personToCredit personToCreditElement : personToCreditsArrayList)
+            for(PersonToCredit personToCreditElement : personToCreditsArrayList)
             {
                 //If the id's match then loop through personArrayList to find persons_fk and persons id
                 if(programElement.getId() == personToCreditElement.getProductions_fk())

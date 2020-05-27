@@ -1,12 +1,12 @@
 package data;
 
-public class personToCredit {
+public class PersonToCredit {
     private long id;
     private String role;
     private long productions_fk;
     private long persons_fk;
 
-    public personToCredit(long id, String role, long productions_fk, long persons_fk) {
+    public PersonToCredit(long id, String role, long productions_fk, long persons_fk) {
         this.id = id;
         this.role = role;
         this.productions_fk = productions_fk;

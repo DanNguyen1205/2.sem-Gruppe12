@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.UUID;
 
+//We need an arraylist and also a HashMap
+//HashMap for when we insert
+//ArrayList for when we search
+
 public class Program implements Serializable{
     private long id;
     private String name;
@@ -101,5 +105,12 @@ public class Program implements Serializable{
         String finalString = "";
         return finalString = "Kreditter til " + name + ":" + "\n" + persosnString;
     }
+
+    public String showCreditMap()
+    {
+        String finalString = "";
+        return finalString = "Kreditter til " + name + ":\n" + credits;
+     }
+
 
 }

@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Credit{
-    private String finalString;
     HashMap<Person, String> creditMap = new HashMap<>();
 
     public Credit(HashMap creditMap){

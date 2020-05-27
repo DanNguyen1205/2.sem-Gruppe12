@@ -57,6 +57,8 @@ public class ProducerProduktionController implements Initializable {
 
     @FXML
     Button submitButton;
+    @FXML
+    Label submitLabel;
 
     //Attributes for creation of credits and programs
     Program program;
@@ -88,7 +90,7 @@ public class ProducerProduktionController implements Initializable {
         if (event.getSource() == insertProductionButton) {
             //Checks if all the text fields are fileld out
             if (titleField.getText().isEmpty() || producerField.getText().isEmpty() || releaseDateField.getText().isEmpty()) {
-                productionLabel.setText("Insert all fields please.");
+                productionLabel.setText("Insert all fields.");
                 //If they are filled out then make a new program with the information.
             } else {
                 productionLabel.setText("");
@@ -124,7 +126,7 @@ public class ProducerProduktionController implements Initializable {
         if (event.getSource() == insertCreditButton) {
             //If all the fields are not filled out
             if (personNameField.getText().isEmpty() || roleField.getText().isEmpty() || emailField.getText().isEmpty()) {
-                creditLabel.setText("Insert all fields");
+                creditLabel.setText("Insert all fields.");
                 //If the fields are filled out update the observable list with the persons.
             } else {
                 String name = personNameField.getText();
@@ -161,16 +163,45 @@ public class ProducerProduktionController implements Initializable {
 
     public void submitButton()
     {
-        //Use creditFactory and programFactory methods to create a credit to put inside a program.
-        credit = cf.createCredit(cf.createCreditMap(observableList));
-        pf.setCreditToProgram(credit, program);
+        if(personNameField.getText().isEmpty() || roleField.getText().isEmpty() || emailField.getText().isEmpty() ||
+        titleField.getText().isEmpty() || producerField.getText().isEmpty() || releaseDateField.getText().isEmpty())
+        {
+            submitLabel.setText("Please type in all data.");
+        }
+        else
+        {
+            //Use creditFactory and programFactory methods to create a credit to put inside a program.
+            credit = cf.createCredit(cf.createCreditMap(observableList));
+            pf.setCreditToProgram(credit, program);
 
-        //Show that we've actually made a credit.
-        System.out.println(program.showCredit());
+            //Show that we've actually made a credit.
+            System.out.println(program.showCreditMap());
 
-        //add the program to the binary file
-        pf.addProgram(program);
+            //add the program to the binary file
+            pf.addProgram(program);
+            submitLabel.setText("Your program has been added");
+            emptyAllFields();
+        }
     }
+
+    public void emptyAllFields()
+    {
+        titleField.clear();
+        producerField.clear();
+        releaseDateField.clear();
+        productionLabel.setText("");
+        productionArea.setText("");
+
+        personNameField.clear();
+        roleField.clear();
+        emailField.clear();
+        observableList.clear();
+        insertProductionButton.setDisable(false);
+
+        submitLabel.setText("");
+    }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

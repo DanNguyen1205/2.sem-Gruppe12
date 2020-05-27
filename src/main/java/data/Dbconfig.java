@@ -3,10 +3,10 @@ package data;
 import java.sql.*;
 
 //Class file that holds the config for logging in to database with a connection.
-public class dbconfig {
+public class Dbconfig {
     static Connection connection = null;
 
-    public dbconfig()
+    public Dbconfig()
     {
         dbconnect();
     }
@@ -25,5 +25,4 @@ public class dbconfig {
             System.out.println(e.getMessage());
         }
     }
-
 }
